@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { auth } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "./firebase";
 import "./App.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -24,13 +25,6 @@ const languages = [
   "Bengali",
   "Persian"
 ];
-
-const mockCnicDB = {
-  "3520212345671": "Hassan sheik",
-  "3520212345672": "Usman Mirza",
-  "6110112345673": "Haroon Malik",
-  "6110112345675": "Wasi CH",
-};
 
 const triageRules = [
   {
@@ -599,7 +593,7 @@ function App() {
     setOtpError("");
   };
 
-  const handleVerifyCnic = () => {
+  const handleVerifyCnic = async () => {
     setOtpError("");
     setOtpMessage("");
 
@@ -610,22 +604,33 @@ function App() {
       return;
     }
 
-    const matchedName = mockCnicDB[cleanCnic];
+    try {
+      const userDocRef = doc(db, "users", cleanCnic);
+      const userDocSnap = await getDoc(userDocRef);
 
-    if (!matchedName) {
-      setOtpError("CNIC not found in customer records.");
-      return;
+      if (!userDocSnap.exists()) {
+        setOtpError("CNIC not found in Firebase.");
+        return;
+      }
+
+      const data = userDocSnap.data();
+      const customerName = data?.name || "";
+      const contactFromFirebase = data?.mobile || verification.contact;
+
+      setVerification((v) => ({
+        ...v,
+        cnic: cleanCnic,
+        cnicName: customerName,
+        customerName,
+        contact: contactFromFirebase,
+        isCnicVerified: true,
+      }));
+
+      setOtpMessage(`CNIC verified successfully: ${customerName}`);
+    } catch (error) {
+      console.error(error);
+      setOtpError("Error fetching CNIC data");
     }
-
-    setVerification((v) => ({
-      ...v,
-      cnic: cleanCnic,
-      cnicName: matchedName,
-      customerName: matchedName,
-      isCnicVerified: true,
-    }));
-
-    setOtpMessage(`CNIC verified successfully: ${matchedName}`);
   };
 
   const handleSendOtp = async () => {
