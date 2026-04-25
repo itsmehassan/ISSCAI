@@ -13,6 +13,52 @@ body {
   background: linear-gradient(145deg, #061223, #0b213d);
 }
 
+.landing-screen {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: grid;
+}
+
+.landing-overlay {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    160deg,
+    rgba(3, 12, 30, 0.76),
+    rgba(5, 24, 52, 0.56)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.start-system-btn {
+  border: 1px solid rgba(131, 197, 255, 0.8);
+  background: linear-gradient(135deg, #1f6fe0, #2da8ff);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 24px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(7, 68, 146, 0.38);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.start-system-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px rgba(8, 80, 170, 0.45);
+  filter: brightness(1.06);
+}
+
+.start-system-btn:focus-visible {
+  outline: 2px solid #b9deff;
+  outline-offset: 2px;
+}
+
 .app-shell {
   max-width: 1180px;
   margin: 0 auto;
@@ -314,5 +360,10 @@ label {
   .ticket-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .start-system-btn {
+    width: 100%;
+    max-width: 340px;
   }
 }

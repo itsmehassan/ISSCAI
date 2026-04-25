@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
+import heroImage from "./assets/hero.jpg";
 import "./App.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
@@ -442,6 +443,7 @@ const seedComplaints = [
 
 function App() {
   const savedVerifiedPhone = localStorage.getItem("isscai_verified_phone") || "";
+  const [showApp, setShowApp] = useState(false);
   const [step, setStep] = useState(1);
   const [verification, setVerification] = useState({
     channel: "WhatsApp",
@@ -902,6 +904,21 @@ function App() {
       if (recaptchaVerifierRef.current) recaptchaVerifierRef.current.clear();
     };
   }, []);
+
+  if (!showApp) {
+    return (
+      <section
+        className="landing-screen"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
+        <div className="landing-overlay">
+          <button className="start-system-btn" onClick={() => setShowApp(true)}>
+            Start Complaint System
+          </button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <div className="app-shell">
