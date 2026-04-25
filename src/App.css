@@ -1,0 +1,318 @@
+:root {
+  font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+  color: #e8eef8;
+  background: #08162b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(145deg, #061223, #0b213d);
+}
+
+.app-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+}
+
+p {
+  margin: 6px 0;
+}
+
+.steps {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+button,
+input,
+select,
+textarea {
+  border-radius: 10px;
+  border: 1px solid #2e4b73;
+  background: #0f243f;
+  color: #e8eef8;
+  padding: 9px 12px;
+}
+
+button {
+  cursor: pointer;
+  background: #1a4f9c;
+  border-color: #2a65bc;
+}
+
+button:hover {
+  background: #2362ba;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active-step {
+  background: #2b74da;
+}
+
+.card {
+  background: #0d1f38;
+  border: 1px solid #1d3f69;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.grid-2,
+.grid-4 {
+  display: grid;
+  gap: 12px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.92rem;
+}
+
+.actions-row {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: #1d7a46;
+  border: 1px solid #29a55f;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.84rem;
+}
+
+#recaptcha-container {
+  margin: 10px 0;
+}
+
+.status-ok {
+  color: #8df0b6;
+}
+
+.status-error {
+  color: #ff9898;
+}
+
+.chat-layout {
+  display: block;
+}
+
+.chat-column {
+  width: 100%;
+  background: #0b1930;
+  border: 1px solid #275485;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.chat-toolbar {
+  margin-bottom: 10px;
+}
+
+.chat-messages {
+  height: 360px;
+  overflow-y: auto;
+  background: #081423;
+  border: 1px solid #294d78;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.bubble {
+  max-width: 78%;
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  line-height: 1.35;
+}
+
+.bot-bubble {
+  background: #17345e;
+  border: 1px solid #2a548c;
+}
+
+.user-bubble {
+  background: #0f5d35;
+  border: 1px solid #2e9964;
+  margin-left: auto;
+}
+
+.typing-indicator {
+  color: #8cb7ea;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.chat-input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.upload {
+  margin: 12px 0;
+}
+
+.analysis-card {
+  background: #0b1930;
+  border: 1px solid #275485;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.ticket-summary-card {
+  background: #0b1930;
+  border: 1px solid #275485;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ticket-header h3 {
+  margin: 0;
+}
+
+.share-ticket-box {
+  background: #11345d;
+  border: 1px solid #3370b3;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  color: #cfe6ff;
+}
+
+.ticket-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.ticket-actions button {
+  min-width: 150px;
+}
+
+.priority-chip,
+.risk-chip {
+  border-radius: 999px;
+  padding: 3px 9px;
+  font-size: 0.8rem;
+  border: 1px solid #3f5f86;
+}
+
+.priority-chip.high {
+  background: #7b1f2d;
+  border-color: #b63c53;
+}
+
+.priority-chip.medium {
+  background: #5b4b0a;
+  border-color: #a28320;
+}
+
+.priority-chip.low {
+  background: #0e4f2d;
+  border-color: #2e9964;
+}
+
+.risk-chip {
+  background: #4c2630;
+  border-color: #b1506a;
+}
+
+.quality-bar {
+  height: 8px;
+  width: 100%;
+  border-radius: 999px;
+  background: #122844;
+  margin-bottom: 10px;
+}
+
+.quality-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2f77db, #2ecb88);
+}
+
+.plain-list {
+  margin: 6px 0 10px;
+  padding-left: 18px;
+}
+
+.queue {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.complaint-card {
+  border: 1px solid #2d527d;
+  border-radius: 12px;
+  padding: 10px;
+  background: #0a182d;
+  cursor: pointer;
+}
+
+.complaint-card.selected {
+  border-color: #4f8cdc;
+  background: #102748;
+}
+
+.history {
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px solid #274565;
+}
+
+@media (max-width: 900px) {
+  .ticket-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
