@@ -487,6 +487,7 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
   const [aiResult, setAiResult] = useState(null);
   const [attachmentName, setAttachmentName] = useState("");
+  const [globalSearch, setGlobalSearch] = useState("");
   const chatScrollRef = useRef(null);
   const isGuestUser = verification.channel === "Guest / Non-Banking Customer";
 
@@ -510,6 +511,13 @@ function App() {
     if (!verification.contact) return [];
     return complaints.filter((item) => item.contact === verification.contact);
   }, [complaints, verification.contact]);
+  const summaryStats = useMemo(() => {
+    const total = complaints.length;
+    const highPriority = complaints.filter((item) => item.priority === "High").length;
+    const resolved = complaints.filter((item) => item.status === "Resolved").length;
+    const pending = complaints.filter((item) => item.status !== "Resolved").length;
+    return { total, highPriority, resolved, pending };
+  }, [complaints]);
 
   const canProceed = isGuestUser
     ? verification.customerName &&
@@ -921,24 +929,95 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
-      <header className="topbar">
-        <div>
-          <h1>InnerSight Smart Complaint AI Assistant (ISSCAI)</h1>
-          <p>Banking complaint triage MVP</p>
+    <div className="dashboard-shell">
+      <aside className="sidebar">
+        <div className="sidebar-brand">
+          <div className="brand-badge">IS</div>
+          <div>
+            <h3>ISSCAI</h3>
+            <p>Smart Complaint AI</p>
+          </div>
         </div>
-        <nav className="steps">
-          {[1, 2, 3, 4].map((s) => (
+        <nav className="sidebar-nav">
+          <button className={step === 4 ? "active-nav" : ""} onClick={() => setStep(4)}>
+            Dashboard
+          </button>
+          <button className={step === 1 ? "active-nav" : ""} onClick={() => setStep(1)}>
+            Verification
+          </button>
+          <button className={step === 2 ? "active-nav" : ""} onClick={() => setStep(2)}>
+            AI Chat
+          </button>
+          <button className={step === 3 ? "active-nav" : ""} onClick={() => setStep(3)}>
+            Tickets
+          </button>
+          <button className={step === 4 ? "active-nav" : ""} onClick={() => setStep(4)}>
+            History
+          </button>
+          <button type="button">Settings</button>
+        </nav>
+        <button className="logout-btn" type="button">
+          Demo Logout
+        </button>
+      </aside>
+
+      <div className="main-panel">
+        <header className="topbar">
+          <div>
+            <h1>InnerSight Smart Complaint AI Assistant (ISSCAI)</h1>
+            <p>Premium Banking Complaint Triage Dashboard</p>
+          </div>
+          <div className="topbar-right">
+            <div className="search-wrap">
+              <span className="search-icon">⌕</span>
+              <input
+                value={globalSearch}
+                onChange={(e) => setGlobalSearch(e.target.value)}
+                placeholder="Search CNIC, ticket, complaint..."
+              />
+            </div>
+            <div className="top-icons">
+              <span className="icon-pill">🔔</span>
+              <span className="icon-pill">👤</span>
+            </div>
+          </div>
+        </header>
+
+        <section className="stat-grid">
+          <article className="stat-card">
+            <p>Total Complaints</p>
+            <h3>{summaryStats.total}</h3>
+          </article>
+          <article className="stat-card">
+            <p>High Priority</p>
+            <h3>{summaryStats.highPriority}</h3>
+          </article>
+          <article className="stat-card">
+            <p>Resolved</p>
+            <h3>{summaryStats.resolved}</h3>
+          </article>
+          <article className="stat-card">
+            <p>Pending</p>
+            <h3>{summaryStats.pending}</h3>
+          </article>
+        </section>
+
+        <nav className="step-pills">
+          {[
+            { id: 1, label: "Step 1 Customer Verification" },
+            { id: 2, label: "Step 2 Complaint Chat" },
+            { id: 3, label: "Step 3 Ticket Generated" },
+            { id: 4, label: "Step 4 History" }
+          ].map((item) => (
             <button
-              key={s}
-              className={step === s ? "active-step" : ""}
-              onClick={() => setStep(s)}
+              key={item.id}
+              className={step === item.id ? "active-step" : ""}
+              onClick={() => setStep(item.id)}
             >
-              Step {s}
+              {item.label}
             </button>
           ))}
         </nav>
-      </header>
 
       {step === 1 && (
         <section className="card">
@@ -1260,6 +1339,7 @@ function App() {
           )}
         </section>
       )}
+      </div>
     </div>
   );
 }
