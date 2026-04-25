@@ -628,8 +628,17 @@ function App() {
 
       setOtpMessage(`CNIC verified successfully: ${customerName}`);
     } catch (error) {
-      console.error(error);
-      setOtpError("Error fetching CNIC data");
+      console.error("CNIC Firestore lookup failed:", {
+        code: error?.code,
+        message: error?.message,
+      });
+      if (error?.code === "permission-denied") {
+        setOtpError("Firestore permission denied. Please update Firestore rules.");
+      } else if (error?.code === "unavailable") {
+        setOtpError("Firestore service unavailable. Please try again.");
+      } else {
+        setOtpError(`Error fetching CNIC data (${error?.code || "unknown-error"})`);
+      }
     }
   };
 
